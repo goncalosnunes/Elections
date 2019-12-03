@@ -10,6 +10,9 @@ import blockchain.Block;
 import blockchain.Blockchain;
 import blockchain.MinerThr;
 import blockchainGUI.GeneratorPanel;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -33,8 +36,16 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     Blockchain myBlockChain;
     BalancedMiner miner = new BalancedMiner();
 
-    public RemoteNodeObject() throws RemoteException{
-        
+    public RemoteNodeObject(int port, Blockchain chain, GeneratorPanel gui) throws RemoteException{
+        super(port);
+        try {
+            host = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(RemoteNodeObject.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        nodeList = new CopyOnWriteArraySet<IRemoteNode>();
+        this.gui = gui;
+        this.myBlockChain = chain;
     }
     
     @Override
@@ -76,9 +87,12 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     
     @Override
     public void addService(String txt) throws RemoteException{
-    //contriuir o bloco
-    //criar bloco
-    //chamar minerador
+        try {
+            Block blk = new Block(myBlockChain.getLast(), txt);
+            mine(blk);
+        } catch (Exception ex) {
+            Logger.getLogger(RemoteNodeObject.class.getName()).log(Level.SEVERE, null, ex);
+        }
             
     }
     

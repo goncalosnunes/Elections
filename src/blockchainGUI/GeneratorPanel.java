@@ -12,6 +12,7 @@ import blockchain.Blockchain;
 import blockchain.MinerThr;
 import java.awt.Dimension;
 import java.io.File;
+import java.rmi.RemoteException;
 import java.security.KeyPair;
 import java.util.Base64;
 import java.util.logging.Level;
@@ -25,7 +26,7 @@ import security.confident.Asimetric;
  * @author gonca
  */
 public class GeneratorPanel extends javax.swing.JFrame {
-    
+    private RemoteNodeObject myObject;
     private Blockchain bc;
     String algorithm = "SHA3-256";
     private KeyPair kp;
@@ -38,15 +39,19 @@ public class GeneratorPanel extends javax.swing.JFrame {
             Logger.getLogger(GeneratorPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
-        customInit();
+        try {
+            customInit();
+        } catch (RemoteException ex) {
+            Logger.getLogger(GeneratorPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setExtendedState(MAXIMIZED_BOTH);
         
         
     }
     
-     private void customInit() {
+     private void customInit() throws RemoteException {
         this.bc = new Blockchain();
-        
+        myObject = new RemoteNodeObject(10010, bc, this);
     }
 
 
@@ -242,8 +247,8 @@ public class GeneratorPanel extends javax.swing.JFrame {
         String fact = num.getText()+ "\n" + option();
         try {
             if(!validateUSer(fact)){
-
-                bc.add(fact);
+                myObject.addService(fact);
+               
             }
         } catch (Exception ex) {
             Logger.getLogger(GeneratorPanel.class.getName()).log(Level.SEVERE, null, ex);

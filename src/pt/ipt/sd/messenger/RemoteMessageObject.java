@@ -101,7 +101,7 @@ public class RemoteMessageObject extends UnicastRemoteObject implements IRemoteM
     @Override
     public void mineBlock(Block block) throws RemoteException {
         try {
-            block.mine();
+            //block.mine();
         } catch (Exception ex) {
             Logger.getLogger(RemoteMessageObject.class.getName()).log(Level.SEVERE, null, ex);
         }
