@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Rede;
+package Net;
 
 import blockchain.Block;
 import blockchain.Blockchain;
@@ -23,7 +23,7 @@ public interface IRemoteNode extends Remote{
     public Block getNetworkLastBlock() throws RemoteException;
     public Block getLastBlock() throws RemoteException;
     public Blockchain getBlockchain() throws RemoteException;
-    public void addService() throws RemoteException;
-    public void startMiner(Block blockNotMined) throws RemoteException;
+    public void addService(String txt) throws RemoteException;
+    public void mine(Block blockNotMined) throws RemoteException;
     public void stopMiner(Block blockMined) throws RemoteException;
 }

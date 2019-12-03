@@ -5,6 +5,7 @@
  */
 package blockchain;
 
+import blockchainGUI.GeneratorPanel;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -13,26 +14,37 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author gonca
  */
 public class BalancedMiner {
-    Block bloco;
-    AtomicInteger ticket;
-    AtomicBoolean isDone = new AtomicBoolean(false);
-    public MinerThr[] thr;
+    long nonce = 0;
+    AtomicBoolean isWorking;
 
-    public BalancedMiner(Block bloco, AtomicInteger ticket) {
-        this.bloco = bloco;
-        this.ticket = ticket;
+    public BalancedMiner() {
+        isWorking = new AtomicBoolean(false);
+    }
+
+    public long getNonce() {
+        return nonce;
+    }
+
+    public void stopMining() { 
+        isWorking.set(false);
+        System.out.println("mandei parar");
+       
+        
+    }
+
+    public boolean isWorking() {
+        return isWorking.get();
     }
     
-    public void MineBlock() throws InterruptedException{
+    public void mine(Block blk, GeneratorPanel gui) throws InterruptedException{
         int numCores = Runtime.getRuntime().availableProcessors();
-        ticket = new AtomicInteger(0);
-        thr = new MinerThr[numCores];
+        MinerThr[] thr = new MinerThr[numCores];
         //----------------------------------------------------------------------
         //----- construir e por a threads a correr -----------
         //----------------------------------------------------------------------
         for (int i = 0; i < thr.length; i++) {
-            thr[i] = new MinerThr(isDone, bloco);
-            thr[i].start();
+            thr[i] = new MinerThr();
+            thr[i].mine(blk, isWorking);
         }
         //----------------------------------------------------------------------
         //----- esperar que a threads concluam o trabalho ------

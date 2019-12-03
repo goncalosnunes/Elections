@@ -27,10 +27,13 @@ public class MinerThr extends Thread {
     AtomicBoolean isDone;
     Block bloco;
 
-    public MinerThr(AtomicBoolean isDone, Block b) {
-
+    public MinerThr() {
+    }
+    
+    public void mine(Block blk, AtomicBoolean isDone){
+        this.bloco = blk;
         this.isDone = isDone;
-        this.bloco = b;
+        this.start();
     }
 
     @Override

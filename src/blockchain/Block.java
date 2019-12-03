@@ -41,14 +41,8 @@ public class Block implements Serializable {
         this.hashUser = getNum(data);
         this.size = 4;
         this.ticket = new AtomicInteger();
-        mine();
     }
 
-    public void mine() throws Exception {
-        
-        BalancedMiner miner = new BalancedMiner(this, this.ticket);
-        miner.MineBlock();
-    }
 
     public String getNum(String data) {
         String[] vote = data.split("\n");
