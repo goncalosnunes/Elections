@@ -9,6 +9,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
@@ -21,12 +23,12 @@ import java.util.logging.Logger;
 public class MinerThr extends Thread {
 
     String algorithm = "SHA3-256";
-    AtomicInteger ticket;
+
     AtomicBoolean isDone;
     Block bloco;
 
-    public MinerThr(AtomicInteger ticket, AtomicBoolean isDone, Block b) {
-        this.ticket = ticket;
+    public MinerThr(AtomicBoolean isDone, Block b) {
+
         this.isDone = isDone;
         this.bloco = b;
     }
@@ -34,7 +36,7 @@ public class MinerThr extends Thread {
     @Override
     public void run() {
         while (!isDone.get()) {
-            int i = ticket.getAndIncrement();
+            long i = ThreadLocalRandom.current().nextLong();
             String dados;
             String hash;
             String num = (int) Math.pow(10, bloco.size) + "";
@@ -47,12 +49,12 @@ public class MinerThr extends Thread {
                     bloco.hash = hash;
                     bloco.nonce = BigInteger.valueOf(i);
                     isDone.set(true);
-                    break;
+
                 }
             } catch (Exception ex) {
                 Logger.getLogger(MinerThr.class.getName()).log(Level.SEVERE, null, ex);
             }
-        };
+        }
     }
 
     public byte[] getHash(byte[] data, String algorithm) throws Exception {
@@ -66,5 +68,8 @@ public class MinerThr extends Thread {
         md.update(data);
         byte[] trueHash = md.digest();
         return Arrays.equals(trueHash, hash);
+    }
+    public void stoping(){
+        isDone.set(true);
     }
 }

@@ -40,7 +40,8 @@ public class Block implements Serializable {
         this.voterSecret = encryptGeral(data);
         this.hashUser = getNum(data);
         this.size = 4;
-        this.ticket.set(0);
+        this.ticket = new AtomicInteger();
+        mine();
     }
 
     public void mine() throws Exception {
