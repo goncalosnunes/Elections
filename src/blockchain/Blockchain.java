@@ -36,18 +36,8 @@ public class Blockchain implements Serializable {
         }
     }
 
-    public void add(String data) throws Exception {
-
-        Cronometer cronometer = new Cronometer();
-        cronometer.start();
-        String hash = getLast();
-        System.out.println("oi");
-
-        Block newBlock = new Block(hash, data);
-        cronometer.stop();
-        newBlock.tempo = cronometer.getElapsedTime();
-        chain.add(newBlock);
-
+    public void add(Block bloco) throws Exception {
+        chain.add(bloco);
     }
 
     public void print() {
@@ -74,9 +64,15 @@ public class Blockchain implements Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void load(File file) throws Exception {
         ObjectInputStream myFile = new ObjectInputStream(new FileInputStream(file));
-        this.chain = (ArrayList<Block>) myFile.readObject();
+        Object objectFromFile = myFile.readObject();
+        if(objectFromFile.getClass().equals(new ArrayList<Block>().getClass())){
+            this.chain = (ArrayList<Block>) myFile.readObject();
+            return;
+        }
+        System.out.println("O ficheiro escolhido não é uma blockchain");
     }
 
     public ArrayList<Block> getBlocks() {

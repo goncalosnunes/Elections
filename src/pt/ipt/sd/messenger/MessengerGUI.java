@@ -363,6 +363,7 @@ public class MessengerGUI extends javax.swing.JFrame {
         
     }
     
+    @SuppressWarnings({"unchecked"})
     public void displayNetwork(){
         try {
             DefaultListModel model = new DefaultListModel();

@@ -34,7 +34,7 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     CopyOnWriteArraySet<IRemoteNode> nodeList;
 
     Blockchain myBlockChain;
-    BalancedMiner miner = new BalancedMiner();
+    BalancedMiner miner = new BalancedMiner(this);
 
     public RemoteNodeObject(int port, Blockchain chain, GeneratorPanel gui) throws RemoteException{
         super(port);
@@ -102,7 +102,7 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
        //         sair
        //pOR O MINEIRO a trabalhar
        //se o mineiro já estiver a minar sai
-        if (miner.isWorking()) {
+        if (!miner.isWorking()) {
             gui.writeMessage("Miner busy");
             System.out.println("BUSY");
             return;
@@ -131,7 +131,13 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     
     @Override
     public void stopMiner(Block blockMined) throws RemoteException{
-        miner.stopMining();
+        try {
+            miner.stopMining();
+            myBlockChain.add(blockMined);
+            gui.stopMining();
+        } catch (Exception ex) {
+            Logger.getLogger(RemoteNodeObject.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

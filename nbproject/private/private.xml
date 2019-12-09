@@ -3,15 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SD/Elections/src/blockchain/BalancedMiner.java</file>
-            <file>file:/D:/SD/Elections/src/blockchain/MinerThr.java</file>
-            <file>file:/D:/SD/Elections/src/Security/confident/TestAsymetric.java</file>
-            <file>file:/D:/SD/Elections/src/blockchainGUI/GeneratorPanel.java</file>
-            <file>file:/D:/SD/Elections/src/Net/RemoteNodeObject.java</file>
-            <file>file:/D:/SD/Elections/src/blockchain/Block.java</file>
-            <file>file:/D:/SD/Elections/src/Integrity/Integrity.java</file>
-            <file>file:/D:/SD/Elections/src/blockchain/Blockchain.java</file>
-            <file>file:/D:/SD/Elections/src/Net/IRemoteNode.java</file>
+            <file>file:/C:/Users/Mauro%20Damásio/Desktop/Elections-mauro/src/blockchain/Blockchain.java</file>
+            <file>file:/C:/Users/Mauro%20Damásio/Desktop/Elections-mauro/src/Net/RemoteNodeObject.java</file>
+            <file>file:/C:/Users/Mauro%20Damásio/Desktop/Elections-mauro/src/blockchain/Block.java</file>
+            <file>file:/C:/Users/Mauro%20Damásio/Desktop/Elections-mauro/src/blockchain/MinerThr.java</file>
+            <file>file:/C:/Users/Mauro%20Damásio/Desktop/Elections-mauro/src/blockchainGUI/GeneratorPanel.java</file>
+            <file>file:/C:/Users/Mauro%20Damásio/Desktop/Elections-mauro/src/Net/IRemoteNode.java</file>
+            <file>file:/C:/Users/Mauro%20Damásio/Desktop/Elections-mauro/src/blockchain/BalancedMiner.java</file>
         </group>
     </open-files>
 </project-private>

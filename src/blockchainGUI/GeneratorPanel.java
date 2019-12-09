@@ -254,11 +254,11 @@ public class GeneratorPanel extends javax.swing.JFrame {
             Logger.getLogger(GeneratorPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 //        data.setText("");
-        num.setText("");
-        this.drawChain();
+        //num.setText("");
+        //this.drawChain();
         
     }//GEN-LAST:event_addBlockActionPerformed
-private void drawChain() {
+public void drawChain() {
         // Remove all blocks from blocks panel
         this.blocksPanel.removeAll();
         // Add new list of blocks to the blocks panel
@@ -423,7 +423,11 @@ private void drawChain() {
     public void stopMining() {
 
         SwingUtilities.invokeLater(() -> {
-            
+            num.setText("");
+            psBtn.setSelected(false);
+            psdBtn.setSelected(false);
+            beBtn.setSelected(false);
+            cdsBtn.setSelected(false);
             txtWorking.setVisible(false);
             drawChain();
             writeLog("block ready" + "\n" + "----------------------");
@@ -445,5 +449,9 @@ private void drawChain() {
 
     public void writeMessage(String txt) {
         txtLog.setText(txtLog.getText() + "\n" + txt);
+    }
+    
+    public void setIsWorking(boolean bool){
+        txtWorking.setVisible(bool);
     }
 }

@@ -87,7 +87,7 @@ public class RemoteMessageObject extends UnicastRemoteObject implements IRemoteM
     @Override
     public void addBlock(String data) throws RemoteException {
         try {
-            bc.add(data);
+            bc.add(null);
         } catch (Exception ex) {
             Logger.getLogger(RemoteMessageObject.class.getName()).log(Level.SEVERE, null, ex);
         }
