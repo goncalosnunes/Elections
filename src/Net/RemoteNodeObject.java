@@ -49,12 +49,12 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     
     @Override
     public void addNode(IRemoteNode node) throws RemoteException{
-        for (IRemoteNode iRemoteNode : nodeList) {
-            if(iRemoteNode.equals(node)){
-                System.out.println("Nodo já se encontra na lista");
-                return;
-            }
-        }
+//        for (IRemoteNode iRemoteNode : nodeList) {
+//            if(iRemoteNode.equals(node)){
+//                System.out.println("Nodo já se encontra na lista");
+//                return;
+//            }
+//        }
         nodeList.add(node);
     }
     
@@ -117,7 +117,7 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     @Override
     public void addService(String txt) throws RemoteException{
         try {
-            Block blk = new Block(myBlockChain.getLast(), txt);
+            Block blk = new Block(getNetworkLastBlock(), txt);
             mine(blk);
         } catch (Exception ex) {
             Logger.getLogger(RemoteNodeObject.class.getName()).log(Level.SEVERE, null, ex);

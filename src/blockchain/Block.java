@@ -42,7 +42,7 @@ public class Block implements Serializable {
         this.cneSecret = encryptCNE(data);
         this.voterSecret = encryptGeral(data);
         this.hashUser = getNum(data);
-        this.size = 2;
+        this.size = 4;
         this.ticket = new AtomicInteger();
     }
 
