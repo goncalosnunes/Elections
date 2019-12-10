@@ -11,7 +11,6 @@ import Net.IRemoteNode;
 import Net.RemoteNodeObject;
 import blockchain.Blockchain;
 import blockchain.MinerThr;
-import com.sun.org.apache.xalan.internal.xsltc.runtime.BasisLibrary;
 import java.awt.Dimension;
 import java.io.File;
 import java.net.MalformedURLException;
@@ -26,7 +25,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import myUtils.RMI;
-import pt.ipt.sd.messenger.IRemoteMessage;
 import security.confident.Asimetric;
 
 /**
@@ -268,23 +266,17 @@ public class GeneratorPanel extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Log", panel4);
 
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         buttonGroupOptions.add(psBtn);
         psBtn.setText("PS");
-        jPanel3.add(psBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 18, 57, -1));
 
         buttonGroupOptions.add(beBtn);
         beBtn.setText("BE");
-        jPanel3.add(beBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 41, 57, -1));
 
         buttonGroupOptions.add(cdsBtn);
         cdsBtn.setText("CDS");
-        jPanel3.add(cdsBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 41, -1, -1));
 
         buttonGroupOptions.add(psdBtn);
         psdBtn.setText("PSD");
-        jPanel3.add(psdBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 18, -1, -1));
 
         addBlock.setText("Add");
         addBlock.addActionListener(new java.awt.event.ActionListener() {
@@ -292,7 +284,39 @@ public class GeneratorPanel extends javax.swing.JFrame {
                 addBlockActionPerformed(evt);
             }
         });
-        jPanel3.add(addBlock, new org.netbeans.lib.awtextra.AbsoluteConstraints(181, 10, 122, 56));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(psBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(beBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(psdBtn)
+                    .addComponent(cdsBtn))
+                .addGap(18, 18, 18)
+                .addComponent(addBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(psBtn)
+                .addGap(0, 0, 0)
+                .addComponent(beBtn))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(psdBtn)
+                .addGap(0, 0, 0)
+                .addComponent(cdsBtn))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(addBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -307,7 +331,7 @@ public class GeneratorPanel extends javax.swing.JFrame {
                         .addComponent(num, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
@@ -322,7 +346,7 @@ public class GeneratorPanel extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
