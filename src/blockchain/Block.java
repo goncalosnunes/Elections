@@ -13,7 +13,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +34,7 @@ public class Block implements Serializable {
     String hash, previous;
     int size;
     public BigInteger nonce;
+    public long dataDeMineracao;
     public String tempo;
 
     public Block(String previous, String data) throws Exception {
@@ -39,7 +42,7 @@ public class Block implements Serializable {
         this.cneSecret = encryptCNE(data);
         this.voterSecret = encryptGeral(data);
         this.hashUser = getNum(data);
-        this.size = 4;
+        this.size = 2;
         this.ticket = new AtomicInteger();
     }
 
@@ -118,7 +121,9 @@ public class Block implements Serializable {
     }
 
     public String getTempo() {
-        return this.tempo;
+        SimpleDateFormat formatter= new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm:ss z");
+        Date date = new Date(dataDeMineracao);
+        return formatter.format(date);
     }
 
     public String toString() {
@@ -131,7 +136,7 @@ public class Block implements Serializable {
     }
 
     public boolean isValid() throws Exception {
-        String algorithm = "SHA-256";
+        String algorithm = "SHA3-256";
         return Integrity.verifyHash((previous + cneSecret + voterSecret + nonce).getBytes(), hash.getBytes(), algorithm);
     }
 

@@ -34,11 +34,12 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     CopyOnWriteArraySet<IRemoteNode> nodeList;
 
     Blockchain myBlockChain;
-    BalancedMiner miner = new BalancedMiner();
+    BalancedMiner miner = new BalancedMiner(this);
 
     public RemoteNodeObject(int port, Blockchain chain, GeneratorPanel gui) throws RemoteException{
         super(port);
         try {
+            this.port = port;
             host = InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException ex) {
             Logger.getLogger(RemoteNodeObject.class.getName()).log(Level.SEVERE, null, ex);
@@ -50,17 +51,39 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     
     @Override
     public void addNode(IRemoteNode node) throws RemoteException{
-    
+        for (IRemoteNode iRemoteNode : nodeList) {
+            if(iRemoteNode.equals(node)){
+                System.out.println("Nodo já se encontra na lista");
+                return;
+            }
+        }
+        nodeList.add(node);
     }
     
     @Override
     public void syncronizeP2P() throws RemoteException{
-    
+        List aux = getNodes();
+        for (IRemoteNode iRemoteNode : nodeList) {
+            if(iRemoteNode.getNodes().size() > aux.size()){
+                aux = iRemoteNode.getNodes();
+            }
+        }
+        nodeList = new CopyOnWriteArraySet<IRemoteNode>(aux);
     }
     
     @Override
     public void syncronizeBlockchain() throws RemoteException{
-    
+        ArrayList<Blockchain> blockchains = new ArrayList<Blockchain>();
+        for (IRemoteNode node : nodeList) {
+            blockchains.add(node.getBlockchain());
+        }
+        Blockchain aux = blockchains.get(0);
+        for (Blockchain blockchain : blockchains) {
+            if(blockchain.size() > aux.size()){
+                aux = blockchain;
+            }
+        }
+        myBlockChain = aux;
     }
     
     @Override
@@ -70,18 +93,23 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     
     @Override
     public Block getNetworkLastBlock() throws RemoteException{
-//        ArrayList<Block> networkLastBlock = new ArrayList<Block>();
-//        syncronizeP2P();
-//        for (IRemoteNode node : rede) {
-//            networkLastBlock.add(node.getLastBlock());
-//        }
-//
-        return null;
+        ArrayList<Block> lastBlocks = new ArrayList<Block>();
+        for (IRemoteNode iRemoteNode : nodeList) {
+            lastBlocks.add(iRemoteNode.getLastBlock());
+        }
+        Block bloco = lastBlocks.get(0);
+        long aux = bloco.dataDeMineracao;
+        for (Block lastBlock : lastBlocks) {
+            if(lastBlock.dataDeMineracao > aux){
+                bloco = lastBlock;
+                aux = bloco.dataDeMineracao;
+            }
+        }
+        return bloco;
     }
     
     @Override
-    public Block getLastBlock() throws RemoteException{
-        
+    public Block getLastBlock() throws RemoteException{      
         return myBlockChain.getBlocks().get(myBlockChain.getBlocks().size() - 1);
     }
     
@@ -92,8 +120,7 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
             mine(blk);
         } catch (Exception ex) {
             Logger.getLogger(RemoteNodeObject.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
+        }            
     }
     
     @Override
@@ -102,9 +129,7 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
        //         sair
        //pOR O MINEIRO a trabalhar
        //se o mineiro já estiver a minar sai
-        if (miner.isWorking()) {
-            gui.writeMessage("Miner busy");
-            System.out.println("BUSY");
+        if (!miner.isWorking()) {
             return;
         }
         gui.startMining();
@@ -131,7 +156,16 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     
     @Override
     public void stopMiner(Block blockMined) throws RemoteException{
-        miner.stopMining();
+        try {
+            if(!miner.isWorking()){
+                miner.stopMining();
+                myBlockChain.add(blockMined);
+                gui.stopMining();
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(RemoteNodeObject.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -139,6 +173,17 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
         return myBlockChain;
     }
 
- 
+    @Override
+    public String getName() throws RemoteException {
+        return host + " : " + port;
+    }
+
+    @Override
+    public void stopMiningNetwork(Block blockMined) throws RemoteException {
+        for (IRemoteNode node : nodeList) {
+            node.stopMiner(blockMined);
+        }
+    }
     
+
 }

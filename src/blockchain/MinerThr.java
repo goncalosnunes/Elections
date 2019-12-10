@@ -5,14 +5,13 @@
  */
 package blockchain;
 
+import Net.IRemoteNode;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,23 +22,24 @@ import java.util.logging.Logger;
 public class MinerThr extends Thread {
 
     String algorithm = "SHA3-256";
-
+    IRemoteNode nodo;
     AtomicBoolean isDone;
     Block bloco;
 
     public MinerThr() {
     }
     
-    public void mine(Block blk, AtomicBoolean isDone){
+    public void mine(Block blk, AtomicBoolean isDone, IRemoteNode nodo){
         this.bloco = blk;
         this.isDone = isDone;
+        this.nodo = nodo;
         this.start();
     }
 
     @Override
     public void run() {
         while (!isDone.get()) {
-            long i = ThreadLocalRandom.current().nextLong();
+            long i = Math.abs(ThreadLocalRandom.current().nextLong());
             String dados;
             String hash;
             String num = (int) Math.pow(10, bloco.size) + "";
@@ -47,16 +47,19 @@ public class MinerThr extends Thread {
             try {
                 dados = Base64.getEncoder().encodeToString(getHash(bloco.getVoterSecret(), algorithm)) + Base64.getEncoder().encodeToString(getHash(bloco.getCneSecret(), algorithm)) + Base64.getEncoder().encodeToString(getHash((i + "").getBytes(), algorithm));
                 hash = Base64.getEncoder().encodeToString(getHash(dados.getBytes(), algorithm));
-
                 if (hash.regionMatches(0, num, 0, bloco.size)) {
                     bloco.hash = hash;
                     bloco.nonce = BigInteger.valueOf(i);
-                    isDone.set(true);
-
+                    bloco.dataDeMineracao = System.currentTimeMillis();
+                    nodo.stopMiner(bloco);
+                    nodo.stopMiningNetwork(bloco);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(MinerThr.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        if(isDone.get() == true){
+            return;
         }
     }
 

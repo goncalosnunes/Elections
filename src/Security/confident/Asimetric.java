@@ -67,7 +67,7 @@ public class Asimetric {
      * @throws Exception
      */
     public static KeyPair generateKeyPair(int size) throws Exception {
-        System.out.println("Generating RSA " + size + " keys ...");
+        //System.out.println("Generating RSA " + size + " keys ...");
         // gerador de chaves RSA
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
         //tamanho da chave
