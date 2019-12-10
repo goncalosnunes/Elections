@@ -50,6 +50,7 @@ public class MinerThr extends Thread {
                 if (hash.regionMatches(0, num, 0, bloco.size)) {
                     bloco.hash = hash;
                     bloco.nonce = BigInteger.valueOf(i);
+                    bloco.dataDeMineracao = System.currentTimeMillis();
                     nodo.stopMiner(bloco);
                 }
             } catch (Exception ex) {

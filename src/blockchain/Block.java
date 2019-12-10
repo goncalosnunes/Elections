@@ -32,6 +32,7 @@ public class Block implements Serializable {
     String hash, previous;
     int size;
     public BigInteger nonce;
+    public long dataDeMineracao;
     public String tempo;
 
     public Block(String previous, String data) throws Exception {

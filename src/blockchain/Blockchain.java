@@ -78,4 +78,8 @@ public class Blockchain implements Serializable {
     public ArrayList<Block> getBlocks() {
         return chain;
     }
+    
+    public int size(){
+        return chain.size();
+    }
 }
