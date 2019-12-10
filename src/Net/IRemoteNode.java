@@ -26,4 +26,5 @@ public interface IRemoteNode extends Remote{
     public void addService(String txt) throws RemoteException;
     public void mine(Block blockNotMined) throws RemoteException;
     public void stopMiner(Block blockMined) throws RemoteException;
+    public String getName() throws RemoteException;
 }

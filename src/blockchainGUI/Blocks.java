@@ -43,7 +43,7 @@ public class Blocks extends javax.swing.JPanel {
     }
     
     public void setTempo(String tempo){
-        this.tempo.setText("Tempo de mineração = " + tempo);
+        this.tempo.setText("Data de mineração = " + tempo);
     }
 
     /**
@@ -82,7 +82,7 @@ public class Blocks extends javax.swing.JPanel {
         Nonce.setText("Nonce");
         jPanel1.add(Nonce, java.awt.BorderLayout.PAGE_START);
 
-        tempo.setText("Tempo");
+        tempo.setText("Data");
         jPanel1.add(tempo, java.awt.BorderLayout.PAGE_END);
 
         add(jPanel1, java.awt.BorderLayout.PAGE_END);

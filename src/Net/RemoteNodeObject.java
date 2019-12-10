@@ -177,6 +177,11 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     public Blockchain getBlockchain() throws RemoteException {
         return myBlockChain;
     }
+
+    @Override
+    public String getName() throws RemoteException {
+        return host + " : " + port;
+    }
     
 
 }
