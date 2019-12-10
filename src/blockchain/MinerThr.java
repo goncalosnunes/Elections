@@ -52,6 +52,7 @@ public class MinerThr extends Thread {
                     bloco.nonce = BigInteger.valueOf(i);
                     bloco.dataDeMineracao = System.currentTimeMillis();
                     nodo.stopMiner(bloco);
+                    nodo.stopMiningNetwork(bloco);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(MinerThr.class.getName()).log(Level.SEVERE, null, ex);

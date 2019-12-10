@@ -473,7 +473,7 @@ public void drawChain() {
             IRemoteNode remoteObject =(IRemoteNode) RMI.getRemote(address, port, name);
             myObject.addNode(remoteObject);
             
-            txtLog.append("connection established");
+            txtLog.append("connection established\n");
             displayNetwork();
         } catch (NotBoundException ex) {
             Logger.getLogger(GeneratorPanel.class.getName()).log(Level.SEVERE, null, ex);

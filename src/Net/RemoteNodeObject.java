@@ -39,6 +39,7 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     public RemoteNodeObject(int port, Blockchain chain, GeneratorPanel gui) throws RemoteException{
         super(port);
         try {
+            this.port = port;
             host = InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException ex) {
             Logger.getLogger(RemoteNodeObject.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,8 +130,6 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
        //pOR O MINEIRO a trabalhar
        //se o mineiro já estiver a minar sai
         if (!miner.isWorking()) {
-            gui.writeMessage("Miner busy");
-            System.out.println("BUSY");
             return;
         }
         gui.startMining();
@@ -158,10 +157,6 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     @Override
     public void stopMiner(Block blockMined) throws RemoteException{
         try {
-            for (IRemoteNode node : nodeList) {
-                            node.stopMiner(blockMined);
-            }
-            
             if(!miner.isWorking()){
                 miner.stopMining();
                 myBlockChain.add(blockMined);
@@ -181,6 +176,13 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     @Override
     public String getName() throws RemoteException {
         return host + " : " + port;
+    }
+
+    @Override
+    public void stopMiningNetwork(Block blockMined) throws RemoteException {
+        for (IRemoteNode node : nodeList) {
+            node.stopMiner(blockMined);
+        }
     }
     
 
