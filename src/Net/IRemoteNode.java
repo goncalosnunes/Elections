@@ -20,7 +20,7 @@ public interface IRemoteNode extends Remote{
     public void syncronizeP2P() throws RemoteException;
     public void syncronizeBlockchain() throws RemoteException;
     public List<IRemoteNode> getNodes() throws RemoteException;
-    public Block getNetworkLastBlock() throws RemoteException;
+    public String getNetworkLastBlock() throws RemoteException;
     public Block getLastBlock() throws RemoteException;
     public Blockchain getBlockchain() throws RemoteException;
     public void addService(String txt) throws RemoteException;

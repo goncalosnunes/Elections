@@ -92,10 +92,13 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     }
     
     @Override
-    public Block getNetworkLastBlock() throws RemoteException{
+    public String getNetworkLastBlock() throws RemoteException{
         ArrayList<Block> lastBlocks = new ArrayList<Block>();
         for (IRemoteNode iRemoteNode : nodeList) {
             lastBlocks.add(iRemoteNode.getLastBlock());
+        }
+        if(lastBlocks.isEmpty()){
+            return "";
         }
         Block bloco = lastBlocks.get(0);
         long aux = bloco.dataDeMineracao;
@@ -105,7 +108,7 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
                 aux = bloco.dataDeMineracao;
             }
         }
-        return bloco;
+        return bloco.getHash();
     }
     
     @Override
