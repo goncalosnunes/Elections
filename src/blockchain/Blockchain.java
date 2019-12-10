@@ -35,19 +35,14 @@ public class Blockchain implements Serializable {
             return chain.get(chain.size() - 1).hash;
         }
     }
-
-    public void add(String data) throws Exception {
-
-        Cronometer cronometer = new Cronometer();
-        cronometer.start();
-        String hash = getLast();
-        System.out.println("oi");
-
-        Block newBlock = new Block(hash, data);
-        cronometer.stop();
-        newBlock.tempo = cronometer.getElapsedTime();
-        chain.add(newBlock);
-
+    
+    public void add(Block bloco) throws Exception {
+        chain.add(bloco);
+    }
+    
+    public Block getNewBlock(String data) throws Exception {
+        String prev = getLast();
+        return new Block(prev, data);
     }
 
     public void print() {

@@ -5,11 +5,9 @@
         <group>
             <file>file:/D:/SD/Elections/src/blockchain/BalancedMiner.java</file>
             <file>file:/D:/SD/Elections/src/blockchain/MinerThr.java</file>
-            <file>file:/D:/SD/Elections/src/Security/confident/TestAsymetric.java</file>
             <file>file:/D:/SD/Elections/src/blockchainGUI/GeneratorPanel.java</file>
             <file>file:/D:/SD/Elections/src/Net/RemoteNodeObject.java</file>
             <file>file:/D:/SD/Elections/src/blockchain/Block.java</file>
-            <file>file:/D:/SD/Elections/src/Integrity/Integrity.java</file>
             <file>file:/D:/SD/Elections/src/blockchain/Blockchain.java</file>
             <file>file:/D:/SD/Elections/src/Net/IRemoteNode.java</file>
         </group>
