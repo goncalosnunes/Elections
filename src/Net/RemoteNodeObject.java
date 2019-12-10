@@ -92,12 +92,13 @@ public class RemoteNodeObject  extends UnicastRemoteObject implements IRemoteNod
     @Override
     public String getNetworkLastBlock() throws RemoteException{
         ArrayList<Block> lastBlocks = new ArrayList<Block>();
+        if(myBlockChain.size() == 0){
+            return "";
+        }
         for (IRemoteNode iRemoteNode : nodeList) {
             lastBlocks.add(iRemoteNode.getLastBlock());
         }
-        if(lastBlocks.isEmpty()){
-            return "";
-        }
+        
         Block bloco = lastBlocks.get(0);
         long aux = bloco.dataDeMineracao;
         for (Block lastBlock : lastBlocks) {
